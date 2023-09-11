@@ -21,13 +21,14 @@ exports.postRes = function (request, response) {
       const [key, value] = pair.split("=");
       result[key] = value;
     }
-    var payResponse = CryptoJS.AES.encrypt(JSON.stringify(result), 'shella@1234BriGu').toString();
-    let formbody =
-      `<form id="nonseamless" method="post" name="redirect" action="https://www.respirithealth.com/response/${encodeURIComponent(payResponse)}">
+    let rn = new Date().getTime() + Math.floor(Math.random() * 899999 + 100000);
+    rn = String(rn).slice(0, 6);
+    var payResponse = `${result.order_id}${rn}pay${result.order_status}`;
+    let formbody = `<form id="nonseamless" method="post" name="redirect" action="https://www.respirithealth.com/response/${payResponse}">
       <script language="javascript">document.redirect.submit();</script>
       </form>`;
-      response.writeHeader(200, { "Content-Type": "text/html" });
-      response.write(formbody);
-      response.end();
+    response.writeHeader(200, { "Content-Type": "text/html" });
+    response.write(formbody);
+    response.end();
   });
 };
