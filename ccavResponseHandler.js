@@ -1,6 +1,6 @@
 const ccav = require("./ccavutil.js");
 const qs = require("querystring");
-
+var CryptoJS = require("crypto-js");
 exports.postRes = function (request, response) {
   var ccavEncResponse = "",
     ccavResponse = "",
@@ -21,7 +21,13 @@ exports.postRes = function (request, response) {
       const [key, value] = pair.split("=");
       result[key] = value;
     }
-    response.status(200).send(result);
-    response.end();
+    var payResponse = CryptoJS.AES.encrypt(JSON.stringify(result), 'shella@1234BriGu').toString();
+    let formbody =
+      `<form id="nonseamless" method="post" name="redirect" action="https://www.respirithealth.com/pay/${payResponse}">
+      <script language="javascript">document.redirect.submit();</script>
+      </form>`;
+      response.writeHeader(200, { "Content-Type": "text/html" });
+      response.write(formbody);
+      response.end();
   });
 };
