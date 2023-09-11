@@ -23,7 +23,7 @@ exports.postRes = function (request, response) {
     }
     var payResponse = CryptoJS.AES.encrypt(JSON.stringify(result), 'shella@1234BriGu').toString();
     let formbody =
-      `<form id="nonseamless" method="post" name="redirect" action="https://www.respirithealth.com/pay/${payResponse}">
+      `<form id="nonseamless" method="post" name="redirect" action="https://www.respirithealth.com/response/${payResponse}">
       <script language="javascript">document.redirect.submit();</script>
       </form>`;
       response.writeHeader(200, { "Content-Type": "text/html" });
