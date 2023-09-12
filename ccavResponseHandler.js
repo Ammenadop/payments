@@ -23,7 +23,7 @@ exports.postRes = function (request, response) {
     }
     let rn = new Date().getTime() + Math.floor(Math.random() * 899999 + 100000);
     rn = String(rn).slice(0, 6);
-    var ip = `${result.order_id}${rn}pay${result.order_status}`;
+    var ip = `${result.order_id}${rn}pay${result.order_status}_${result.tracking_id}`;
     let encrypted = CryptoJS.AES.encrypt(ip, "shella@1234BriHakku").toString()
     var payResponse = CryptoJS.enc.Base64.parse(encrypted).toString(CryptoJS.enc.Hex);
     let formbody = `<form id="nonseamless" method="post" name="redirect" action="https://www.respirithealth.com/response/${payResponse}">
